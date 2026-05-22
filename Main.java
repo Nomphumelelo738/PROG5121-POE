@@ -1,4 +1,4 @@
-package com.mycompany.mychatapp;
+package com.mycompany.login;
 
 import java.util.Scanner;
 
@@ -6,63 +6,120 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try (Scanner sc = new Scanner(System.in)) {
+        Scanner scanner = new Scanner(System.in);
 
-            Register reg = new Register();
-            Login login = null;
+        // ================= REGISTER =================
 
-            boolean isRegistered = false;
-            boolean running = true;
+        Register register = new Register();
 
-            while (running) {
+        register.registerUser(scanner);
 
-                System.out.println("\n=== MENU ===");
+        // ================= LOGIN =================
 
-                if (!isRegistered) {
-                    System.out.println("1. Register");
-                    System.out.println("2. Exit");
-                } else {
-                    System.out.println("1. Login");
-                    System.out.println("2. Exit");
+        Login login = new Login(
+                register.getFirstName(),
+                register.getLastName(),
+                register.getUsername(),
+                register.getPassword(),
+                register.getPhone()
+        );
+
+        System.out.println("=== LOGIN ===");
+
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+
+        if (!login.loginUser(username, password)) {
+
+            System.out.println(
+                    login.returnLoginStatus(username, password));
+
+            return;
+        }
+
+        System.out.println(
+                login.returnLoginStatus(username, password));
+
+        System.out.println("Welcome to QuickChat!");
+
+        // ================= MESSAGES =================
+
+        System.out.print("How many messages do you want to send? ");
+
+        int maxMessages =
+                Integer.parseInt(scanner.nextLine());
+
+        int count = 0;
+
+        while (count < maxMessages) {
+
+            System.out.println("\n1. Send Message");
+            System.out.println("2. View Sent Messages");
+            System.out.println("3. Quit");
+
+            System.out.print("Choose option: ");
+
+            int choice =
+                    Integer.parseInt(scanner.nextLine());
+
+            switch (choice) {
+
+                case 1 -> {
+
+                    System.out.print("Recipient: ");
+                    String recipient =
+                            scanner.nextLine();
+
+                    System.out.print("Message: ");
+                    String text =
+                            scanner.nextLine();
+
+                    System.out.println(
+                            Message.checkMessageLength(text));
+
+                    if (text.length() <= 250) {
+
+                        count++;
+
+                        Message msg =
+                                new Message(
+                                        count,
+                                        recipient,
+                                        text);
+
+                        System.out.println(
+                                msg.sendMessage());
+                    }
                 }
 
-                System.out.print("Choose option: ");
-                int choice = sc.nextInt();
-                sc.nextLine();
+                case 2 -> {
 
-                if (!isRegistered) {
+                    System.out.println(
+                            Message.printMessages());
+                }
 
-                    switch (choice) {
-                        case 1 -> {
-                            reg.registerUser(sc);
-                            isRegistered = true;
+                case 3 -> {
 
-                            // create Login object using registered details
-                            login = new Login(reg.getUsername(), reg.getPassword());
-                        }
-                        case 2 -> {
-                            System.out.println("Goodbye!");
-                            running = false;
-                        }
-                        default -> System.out.println("Invalid choice.");
-                    }
+                    System.out.println(
+                            "Total messages sent: "
+                            + Message.returnTotalMessages());
 
-                } else {
+                    System.out.println("Goodbye!");
 
-                    switch (choice) {
-                        case 1 -> {
-                            if (login.loginUser(sc)) {
-                                running = false;
-                            }
-                        }
-                        case 2 -> {
-                            System.out.println("Goodbye!");
-                            running = false;
-                        }
-                        default -> System.out.println("Invalid choice.");
-                    }
+                    scanner.close();
+
+                    return;
+                }
+
+                default -> {
+                    System.out.println("Invalid option.");
                 }
             }
         }
+
+        scanner.close();
     }
 }
