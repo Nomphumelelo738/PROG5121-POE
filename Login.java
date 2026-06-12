@@ -1,40 +1,47 @@
-package com.mycompany.mychatapp;
+package com.mycompany.login;
 
-import java.util.Scanner;
+public class Login {
 
-class Login {
-
+    private String firstName;
+    private String lastName;
     private String username;
     private String password;
+    private String phone;
 
-    // constructor to receive registered data
-    public Login(String username, String password) {
+    public Login(String firstName,
+                 String lastName,
+                 String username,
+                 String password,
+                 String phone) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.phone = phone;
     }
 
-    public boolean loginUser(Scanner sc) {
+    public boolean loginUser(String inputUsername,
+                             String inputPassword) {
 
-        int attempts = 0;
+        return inputUsername.equals(username)
+                && inputPassword.equals(password);
+    }
 
-        while (attempts < 3) {
+    public String returnLoginStatus(String inputUsername,
+                                    String inputPassword) {
 
-            System.out.print("Enter username: ");
-            String inputUser = sc.nextLine();
+        if (loginUser(inputUsername, inputPassword)) {
 
-            System.out.print("Enter password: ");
-            String inputPass = sc.nextLine();
+            return "Welcome "
+                    + firstName + " "
+                    + lastName
+                    + ", it is great to see you again.";
 
-            if (inputUser.equals(username) && inputPass.equals(password)) {
-                System.out.println("Login successful!");
-                return true;
-            } else {
-                attempts++;
-                System.out.println("Incorrect. Attempts left: " + (3 - attempts));
-            }
+        } else {
+
+            return "Username or password incorrect.";
         }
-
-        System.out.println("Too many attempts.");
-        return false;
     }
 }
+

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
  */
-package com.mycompany.mychatapp;
+package com.mycompany.login;
 
 import java.util.Scanner;
 import org.junit.jupiter.api.AfterEach;
@@ -96,6 +96,34 @@ public class RegisterTest {
     }
 
     /**
+     * Test of getFirstName method, of class Register.
+     */
+    @Test
+    public void testGetFirstName() {
+        System.out.println("getFirstName");
+        Register instance = new Register();
+        String expResult = "";
+        String result = instance.getFirstName();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getLastName method, of class Register.
+     */
+    @Test
+    public void testGetLastName() {
+        System.out.println("getLastName");
+        Register instance = new Register();
+        String expResult = "";
+        String result = instance.getLastName();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
      * Test of getUsername method, of class Register.
      */
     @Test
@@ -118,6 +146,20 @@ public class RegisterTest {
         Register instance = new Register();
         String expResult = "";
         String result = instance.getPassword();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPhone method, of class Register.
+     */
+    @Test
+    public void testGetPhone() {
+        System.out.println("getPhone");
+        Register instance = new Register();
+        String expResult = "";
+        String result = instance.getPhone();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
